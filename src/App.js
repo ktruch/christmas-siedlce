@@ -35,6 +35,7 @@ function App() {
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
+    console.log("selected", selectedName);
     fetch('http://localhost:3000/names')
       .then(response => response.json())
       .then(data => setNames(data));
@@ -65,10 +66,12 @@ function App() {
   }
 
   const draw = () => {
-    console.log("namesLeft, namesLeft");
+    console.log("namesLeft", namesLeft);
     console.log("names", names);
     console.log(selectedName)
+
     if (selectedName) {
+      console.log("remainingNames", remainingNames)
       const remainingNames = namesLeft.filter(name => name.name !== selectedName);
       const randomIndex = Math.floor(Math.random() * remainingNames.length);
       const justDrawnName = remainingNames[randomIndex].name;
