@@ -13,11 +13,11 @@ function App() {
 
   const url = 'https://christmas-backend-23r0xtw46-ktruchs-projects.vercel.app'
   useEffect(() => {
-    fetch(`${url}/names`)
+    fetch(`${url}/names`, { mode: 'no-cors' })
       .then(response => response.json())
       .then(data => setNames(data));
 
-    fetch(`${url}/people_left`)
+    fetch(`${url}/people_left`, { mode: 'no-cors' })
       .then(response => response.json())
       .then(data => setNamesLeft(data));
   }, [reload]);
@@ -36,6 +36,7 @@ function App() {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
       },
     })
       .then(response => response.json())
