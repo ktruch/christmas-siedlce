@@ -20,7 +20,7 @@ app.get('/names', async (req, res) => {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    const clear = await collection.updateMany({}, { $set: { draw: null } });
+    // const clear = await collection.updateMany({}, { $set: { draw: null } });
     const names = await collection.find({ draw: null }, { projection: { id: 1, name: 1, draw: 1, _id: 0} }).toArray();
     console.log("names - server", names);
     res.json(names);

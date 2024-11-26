@@ -71,8 +71,8 @@ function App() {
     console.log(selectedName)
 
     if (selectedName) {
-      console.log("remainingNames", remainingNames)
       const remainingNames = namesLeft.filter(name => name.name !== selectedName);
+      console.log("remainingNames", remainingNames)
       const randomIndex = Math.floor(Math.random() * remainingNames.length);
       const justDrawnName = remainingNames[randomIndex].name;
 
