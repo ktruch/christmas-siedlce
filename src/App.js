@@ -38,10 +38,11 @@ function App() {
     fetch('http://localhost:3000/names')
       .then(response => response.json())
       .then(data => setNames(data));
+
     fetch('http://localhost:3000/people_left')
       .then(response => response.json())
       .then(data => setNamesLeft(data));
-  }, []);
+  }, [reload]);
 
   const handleSelectChange = (event) => {
     const selectedId = parseInt(event.target.value, 10);
@@ -50,17 +51,15 @@ function App() {
   };
 
   const saveNames = (nameId, drawnNameId) => {
+    console.log(nameId, drawnNameId);
     fetch('http://localhost:3000/draw', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(nameId, drawnNameId),
+      body: JSON.stringify({nameId, drawnNameId}),
     })
       .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -74,7 +73,7 @@ function App() {
 
       const drawnNameId = names.find(name => name.name === justDrawnName).id;
       const nameId = names.find(name => name.name === selectedName).id;
-      
+
       setDrawnName(justDrawnName);
       saveNames(nameId, drawnNameId);
     } else {

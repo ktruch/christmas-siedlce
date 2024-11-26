@@ -21,21 +21,25 @@ app.get('/names', async (req, res) => {
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
     const names = await collection.find({ draw: null }, { projection: { id: 1, name: 1, draw: 1, _id: 0} }).toArray();
+    console.log(names)
     res.json(names);
-  } finally {
-    await client.close();
+  }catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
-});
+  });
 
-app.get('people_left', async (req, res) => {
+app.get('/people_left', async (req, res) => {
   try {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    const names = await collection.find({ draw: { $exists: false } }, { projection: {id: 1, name: 1, draw: 1, _id: 0 } }).toArray();
+    const names = await collection.find({ draw: { $exists: true } }, { projection: {id: 1, name: 1, draw: 1, _id: 0 } }).toArray();
+    console.log(names)
     res.json(names);
-  } finally {
-    await client.close();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
@@ -44,7 +48,8 @@ app.post('/draw', async (req, res) => {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-
+    console.log(req)
+    console.log(req.body)
     const { id, drawnId } = req.body;
     const updatedNames = await collection.updateOne({ id: id }, { $set: { draw: drawnId } });
 
