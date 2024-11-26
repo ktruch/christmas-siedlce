@@ -1,0 +1,6 @@
+cluster=ChristmasCluster
+db=mongoDBAtlas
+username=katarzynatruch
+password=zDcgC7IVwo6QonUO
+db_name=christmas_draw
+collection_name=userData
