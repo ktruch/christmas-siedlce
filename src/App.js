@@ -13,11 +13,11 @@ function App() {
 
   const url = 'https://christmas-backend-qfbroe2lh-ktruchs-projects.vercel.app'
   useEffect(() => {
-    fetch(`${url}/names`, { mode: 'no-cors' })
+    fetch(`${url}/names`)
       .then(response => response.json())
       .then(data => setNames(data));
 
-    fetch(`${url}/people_left`, { mode: 'no-cors' })
+    fetch(`${url}/people_left`)
       .then(response => response.json())
       .then(data => setNamesLeft(data));
   }, [reload]);
