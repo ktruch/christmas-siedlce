@@ -48,7 +48,7 @@ app.post('/draw', async (req, res) => {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    console.log(req)
+    // console.log(req)
     console.log(req.body)
     const { id, drawnId } = req.body;
     const updatedNames = await collection.updateOne({ id: id }, { $set: { draw: drawnId } });
