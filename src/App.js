@@ -76,9 +76,11 @@ function App() {
       const remainingNames = namesLeft.filter(name => name.name !== selectedName);
       console.log("remainingNames", remainingNames)
       const randomIndex = Math.floor(Math.random() * remainingNames.length);
+      console.log("randomIndex", randomIndex)
       const justDrawnName = remainingNames[randomIndex].name;
-
-      const drawnNameId = names.find(name => name.name === justDrawnName).id;
+      console.log("justDrawnName", justDrawnName)
+      const drawnNameId = namesLeft.find(name => name.name === justDrawnName).id;
+      console.log("drawnNameId", drawnNameId)
       const nameId = names.find(name => name.name === selectedName).id;
 
       setDrawnName(justDrawnName);
