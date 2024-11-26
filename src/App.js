@@ -11,12 +11,13 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [reload, setReload] = useState(false);
 
+  url = 'https://christmas-backend-23r0xtw46-ktruchs-projects.vercel.app'
   useEffect(() => {
-    fetch('http://localhost:3000/names')
+    fetch(`${url}/names`)
       .then(response => response.json())
       .then(data => setNames(data));
 
-    fetch('http://localhost:3000/people_left')
+    fetch(`${url}/people_left`)
       .then(response => response.json())
       .then(data => setNamesLeft(data));
   }, [reload]);
@@ -31,7 +32,7 @@ function App() {
 
   const saveNames = (nameId, drawnNameId) => {
     console.log(nameId, drawnNameId);
-    fetch(`http://localhost:3000/draw?id=${nameId}&drawnId=${drawnNameId}`, {
+    fetch(`${url}/draw?id=${nameId}&drawnId=${drawnNameId}`, {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',
