@@ -52,12 +52,11 @@ function App() {
 
   const saveNames = (nameId, drawnNameId) => {
     console.log(nameId, drawnNameId);
-    fetch('http://localhost:3000/draw', {
+    fetch(`http://localhost:3000/draw?id=${nameId}&drawnId=${drawnNameId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       },
-      body: {nameId, drawnNameId},
     })
       .then(response => response.json())
       .catch((error) => {

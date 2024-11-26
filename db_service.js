@@ -43,14 +43,12 @@ app.get('/people_left', async (req, res) => {
   }
 });
 
-app.post('/draw', async (req, res) => {
+app.post('/draw/:id/:drawnId', async (req, res) => {
   try {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    // console.log(req)
-    console.log(req.body)
-    const { id, drawnId } = req.body;
+    const { id, drawnId } = req.params;
     const updatedNames = await collection.updateOne({ id: id }, { $set: { draw: drawnId } });
 
     res.json(updatedNames);
