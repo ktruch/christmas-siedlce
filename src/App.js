@@ -11,7 +11,7 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [reload, setReload] = useState(false);
 
-  const url = 'https://christmas-backend-qfbroe2lh-ktruchs-projects.vercel.app'
+  const url = 'https://christmas-backend-gxdra245p-ktruchs-projects.vercel.app'
   useEffect(() => {
     fetch(`${url}/names`)
       .then(response => response.json())
