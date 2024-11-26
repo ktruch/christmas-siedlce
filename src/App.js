@@ -46,9 +46,11 @@ function App() {
   }, [reload]);
 
   const handleSelectChange = (event) => {
+    console.log("on select:" , names)
     const selectedId = parseInt(event.target.value, 10);
     const selected = names.find(name => name.id === selectedId);
     setSelectedName(selected ? selected.name : null);
+    setReload(!reload);
   };
 
   const saveNames = (nameId, drawnNameId) => {
