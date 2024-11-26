@@ -14,13 +14,26 @@ const client = new MongoClient(uri, {
 });
 
 app.use(cors());
+app.use(express.json());
+
+app.get("/reset", async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("christmas_draw");
+    const collection = database.collection("userData");
+    const clear = await collection.updateMany({}, { $set: { draw: null } });
+}catch (error) {
+  console.error(error);
+  res.status(500).send('Internal Server Error');
+}
+});
+
 
 app.get('/names', async (req, res) => {
   try {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    // const clear = await collection.updateMany({}, { $set: { draw: null } });
     const names = await collection.find({ draw: null }, { projection: { id: 1, name: 1, draw: 1, _id: 0} }).toArray();
     console.log("names - server", names);
     res.json(names);
