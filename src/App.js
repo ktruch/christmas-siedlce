@@ -65,6 +65,9 @@ function App() {
   }
 
   const draw = () => {
+    console.log("namesLeft, namesLeft");
+    console.log("names", names);
+    console.log(selectedName)
     if (selectedName) {
       const remainingNames = namesLeft.filter(name => name.name !== selectedName);
       const randomIndex = Math.floor(Math.random() * remainingNames.length);

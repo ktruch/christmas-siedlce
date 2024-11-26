@@ -20,8 +20,9 @@ app.get('/names', async (req, res) => {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
+    // const clear = await collection.updateMany({}, { $set: { draw: null } });
     const names = await collection.find({ draw: null }, { projection: { id: 1, name: 1, draw: 1, _id: 0} }).toArray();
-    console.log(names)
+    console.log("names - server", names);
     res.json(names);
   }catch (error) {
     console.error(error);
@@ -34,26 +35,32 @@ app.get('/people_left', async (req, res) => {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    const names = await collection.find({ draw: { $exists: true } }, { projection: {id: 1, name: 1, draw: 1, _id: 0 } }).toArray();
-    console.log(names)
-    res.json(names);
+    const names = await collection.find({}, { projection: {id: 1, name: 1, draw: 1, _id: 0 } }).toArray();
+    const chosenIds = names.map(name => name.draw);
+    const namesLeft = names.filter(name => !chosenIds.includes(name.id));
+    console.log("namesLeft - server", namesLeft);
+    res.json(namesLeft);
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
 
-app.post('/draw/:id/:drawnId', async (req, res) => {
+app.post('/draw', async (req, res) => {
   try {
     await client.connect();
     const database = client.db("christmas_draw");
     const collection = database.collection("userData");
-    const { id, drawnId } = req.params;
-    const updatedNames = await collection.updateOne({ id: id }, { $set: { draw: drawnId } });
-
+    const { id, drawnId } = req.query;
+    console.log("server draw", id, drawnId);
+    if (!id || !drawnId) {
+      return res.status(400).json({ error: 'Missing id or drawnId' });
+    }
+    const updatedNames = await collection.updateOne({ id: parseInt(id) }, { $set: { draw: parseInt(drawnId) } });
     res.json(updatedNames);
-  } finally {
-    await client.close();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
